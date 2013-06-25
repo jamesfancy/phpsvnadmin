@@ -1,0 +1,3 @@
+<div class="init_loading" id="initLoading">
+    正在加载数据，请稍候...
+</div>

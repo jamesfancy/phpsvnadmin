@@ -1,0 +1,13 @@
+<?php
+
+require_once('phpmailer/class.phpmailer.php');
+
+$config->mailer = [
+    'from' => 'jamesfancy@163.com',
+    'fromName' => 'J.Fan',
+    'smtpHost' => 'smtp.163.com',
+    'smtpAuth' => true,
+    'smtpUser' => 'jamesfancy',
+    'smtpPass' => 'gz7uz6mk5hf3',
+    'charset' => 'UTF-8'
+];
