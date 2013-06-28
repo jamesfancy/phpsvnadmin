@@ -1,3 +1,5 @@
 /conf/*.debug
 /conf/*.debug
 /db.sqlite
+
+/nbproject/private
