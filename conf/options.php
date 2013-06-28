@@ -9,8 +9,5 @@ $config->options = [
     
     'isAllowRegister' => true,
     
-    'rowsInPage' => 15,
-    
-    'author' => 'J.Fan (jamesfancy@gmail.com)',
-    'version' => '1.0'
+    'rowsInPage' => 15
 ];

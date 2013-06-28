@@ -56,6 +56,7 @@ $self = currentUser();
                 </div>
             </div>
         </div>
+        <?php include 'inc/footer.inc.php' ?>
     </body>
     <?php include 'inc/endbody.inc.php' ?>
 </html>

@@ -1,5 +1,10 @@
 <?php
 
+class Env {
+
+    const version = "1.0";
+}
+
 class SvnAdminConfig {
 
     var $configs = [

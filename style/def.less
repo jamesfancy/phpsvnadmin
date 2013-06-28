@@ -67,7 +67,7 @@ div.header {
 
     span.title {
         font-size: 20px;
-        font-family: Arial,Verdanda;
+        font-family: "Lucida Grande", Tahoma, sans-serif;
         height: 48px;
         line-height: 48px;
         .lfloat;
@@ -100,7 +100,25 @@ div.header {
     padding: 10px;
 }
 
-/// Index page /////////////////////////////////////////////////
+// Footer area /////////////////////////////////////////////////
+div.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: @lightBg;
+    border-top: 1px solid @darkBg;
+    font-family: "Lucida Grande", Tahoma, sans-serif;
+
+    #version {
+        float: right;
+        line-height: 32px;
+        margin-right: 12px;
+    }
+}
+
+// Index page //////////////////////////////////////////////////
 .index_main_panel {
     background: @darkBg;
     position: absolute;
