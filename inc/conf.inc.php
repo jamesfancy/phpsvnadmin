@@ -34,3 +34,14 @@ class SvnAdminConfig {
 
 $config = new SvnAdminConfig();
 $config->import('options');
+
+if (isset($config->options['appRoot'])) {
+    $appRoot = $config->options['appRoot'];
+    if (!$appRoot) {
+        $appRoot = '/';
+    } else if (!preg_match('/\\/$/', $appRoot)) {
+        $appRoot = $appRoot . '/';
+    }
+} else {
+    $appRoot = '/';
+}

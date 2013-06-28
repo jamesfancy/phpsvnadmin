@@ -237,11 +237,6 @@ jQuery(function() {
         }
     })(jQuery);
     
-    // 初始化Header
-    (function($) {
-        var pageHeader = $("#pageHeader");
-    })(jQuery);
-
     // 注销按钮
     $("#signOutButton").on("click", function() {
         if (!confirm("是否真要注销")) {

@@ -11,6 +11,7 @@
 }
 body {
     margin: 0;
+    color: @text;
 }
 span {
     display: inline-block;
@@ -45,17 +46,32 @@ a.button {
     float: right;
 }
 
-////////////////////////////////////////////////////////////////
-// Header Part
+///Header Area /////////////////////////////////////////////////
 div.header {
     margin-bottom: 12px;
-    text-align: right;
     height: 48px;
     line-height: 48px;
     color: white;
     background: @darkBg url(img/header_bg.png) repeat-x;
     border-bottom: 1px solid #67B021;
     overflow: hidden;
+
+    img.logo {
+        height: 40px;
+        border: 0;
+        margin-left: 4px;
+        margin-right: 12px;
+        margin-top: 4px;
+        .lfloat;
+    }
+
+    span.title {
+        font-size: 20px;
+        font-family: Arial,Verdanda;
+        height: 48px;
+        line-height: 48px;
+        .lfloat;
+    }
 
     a {
         display: inline-block;
@@ -84,7 +100,7 @@ div.header {
     padding: 10px;
 }
 
-////////////////////////////////////////////////////////////////
+/// Index page /////////////////////////////////////////////////
 .index_main_panel {
     background: @darkBg;
     position: absolute;
@@ -93,7 +109,7 @@ div.header {
     left: 50%;
     top: 50%;
     margin-left: -200px;
-    margin-top: -150px;
+    margin-top: -126px;
     border-radius: 3px;
 
     .tab_panel {
@@ -109,53 +125,53 @@ div.header {
             padding-right: 24px;
             border-left: 1px solid @darkBg;
             border-right: 1px solid @darkBg;
+            color: @text;
+            background-color: @lightBg;
+
+            &.active {
+                color: white;
+                font-weight: bold;
+                background-color: @darkBg;
+            }
 
             &.lfloat {
                 margin-left: -1px;
-                background-color: @darkBg;
-                color: white;
-                font-weight: bold;
             }
 
             &.rfloat {
                 margin-right: -1px;
-                background-color: white;
-                color: @text;
             }
         }
     }
 
-    .top_spliter {
-        height: 48px;
-    }
-
-
-    .login_panel {
+    .index_panel {
+        display: none;
+ 
         div {
             margin-top: 10px;
         }
-
+ 
         label {
             display: inline-block;
             text-align: right;
-            width: 50px;
+            width: 90px;
             height: 32px;
             line-height: 32px;
             padding-left: 5px;
             padding-right: 5px;
-            margin-left: 64px;
+            margin-left: 40px;
             color: @lightBg;
             font-weight: bold;
-    }
+        }
 
-        #username, #password {
+        input[type=text], input[type=password] {
             font-size: 16px;
             width: 160px;
             height: 32px;
             line-height: 32px;
-    }
+        }
 
-        #loginButton {
+        input[type=button] {
             position: absolute;
             width: 100%;
             height: 48px;
@@ -168,10 +184,22 @@ div.header {
             margin: 1px 0;
             color: @text;
             font-weight: bold;
-    }
+        }
 
-        #loginButton:hover {
+        input[type=button]:hover {
             background: white;
         }
+    }
+
+    #loginPanel {
+        margin-top: 64px;
+    }
+
+    #registerPanel {
+        margin-top: 42px;
+    }
+
+    #forgotPanel {
+        margin-top: 86px;
     }
 }

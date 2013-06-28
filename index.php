@@ -11,23 +11,48 @@ $self = currentUser();
     <body>
         <?php pageHeader(false); ?>
         <div class="index_main_panel" id="mainPanel">
-            <div class="tab_panel">
-                <a class="button rfloat" href="javascript:void(0)">忘记密码</a>
-                <a class="button rfloat" href="javascript:void(0)">注册</a>
-                <a class="button lfloat" href="javascript:void(0)">登录</a>
+            <div class="tab_panel" id="tabPanel">
+                <a id="loginTab" class="button lfloat active" href="javascript:void(0)">登录</a>
+                <a id="forgotTab" class="button rfloat" href="javascript:void(0)">忘记密码</a>
+                <a id="registerTab" class="button rfloat" href="javascript:void(0)">注册</a>
             </div>
-            <div class="login_panel" id="loginPanel">
-                <div class="top_spliter"></div>
+            <div class="index_panel" id="loginPanel">
                 <div>
                     <label>用户名</label>
-                    <input type="text" id="username" />
+                    <input type="text" id="loginUser" />
                 </div>
                 <div>
                     <label>密码</label>
-                    <input type="password" id="password" />
+                    <input type="password" id="loginPass" />
                 </div>
                 <div>
                     <input type="button" id="loginButton" value="登录" />
+                </div>
+            </div>
+            <div class="index_panel" id="registerPanel">
+                <div>
+                    <label>用户名</label>
+                    <input type="text" id="regUser" />
+                </div>
+                <div>
+                    <label>注册邮箱</label>
+                    <input type="text" id="regEmail" />
+                </div>
+                <div>
+                    <label>设置密码</label>
+                    <input type="password" id="regPass" />
+                </div>
+                <div>
+                    <input type="button" id="registerButton" value="注册" />
+                </div>
+            </div>
+            <div class="index_panel" id="forgotPanel">
+                <div>
+                    <label>用户名或邮箱</label>
+                    <input type="text" id="forgotUser" />
+                </div>
+                <div>
+                    <input type="button" id="getPasswordButton" value="找回密码" />
                 </div>
             </div>
         </div>
