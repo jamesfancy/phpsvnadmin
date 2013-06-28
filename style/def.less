@@ -1,56 +1,78 @@
+// define variables ////////////////////////////////////////////
+@lightBg: #DCF3CA;
+@darkBg: #67B021;
+@border: #327E04;
+@text: #312E25;
+
+// normal style ////////////////////////////////////////////////
+
 * {
     font-size: 14px;
 }
 body {
     margin: 0;
 }
-    
-div.header {
-    margin-bottom: 5px;
-    background: gray;
-    border-bottom: 1px solid lightgray;
-    text-align: right;
-    padding-right: 12px;
-    height: 32px;
-    line-height: 32px;
-    color: white;
-
-    a {
-        color: white;
-        margin-left: 12px;
-    }
-    a:hover {
-        color: lightgray;
-    }
-}
-label {
-    display: inline-block;
-    width: 72px;
-    background: gray;
-    border: 1px solid lightgray;
-    height: 24px;
-    line-height: 24px;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: white;
-}
 span {
     display: inline-block;
     height: 24px;
     line-height: 24px;
 }
-input[type=text], input[type=password] {
-    width: 160px;
-    height: 21px;
-    line-height: 21px;
+.input {
     padding-left: 5px;
     padding-right: 5px;
+    border: 1px solid @border;
+    border-radius: 2px;
+    background: @lightBg;
+    width: 160px;
+    height: 21px;
 }
-input[type=button] {
-    width: 72px;
-    height: 24px;
-    background: lightgray;
-    border: 1px solid gray;
+input[type=text], input[type=password] {
+    .input;
+    line-height: 21px;
+}
+input[type=button], input[type=submit], input[type=reset] {
+    .input;
+    margin-left: 1px;
+    height: 22px;
+}
+a.button {
+    text-decoration: none;
+}
+.lfloat{
+    float: left;
+}
+.rfloat {
+    float: right;
+}
+
+////////////////////////////////////////////////////////////////
+// Header Part
+div.header {
+    margin-bottom: 12px;
+    text-align: right;
+    height: 48px;
+    line-height: 48px;
+    color: white;
+    background: @darkBg url(img/header_bg.png) repeat-x;
+    border-bottom: 1px solid #67B021;
+    overflow: hidden;
+
+    a {
+        display: inline-block;
+        color: white;
+        text-decoration: none;
+        height: 48px;
+        border-left: 1px solid @lightBg;
+        border-right: 1px solid @lightBg;
+        float: right;
+        margin-right: -1px;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    a:hover {
+        background-color: @lightBg;
+        color: @border;
+    }
 }
 .init_loading {
     margin-top: -5px;
@@ -60,4 +82,96 @@ input[type=button] {
     color: #666;
     text-align: center;
     padding: 10px;
+}
+
+////////////////////////////////////////////////////////////////
+.index_main_panel {
+    background: @darkBg;
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -150px;
+    border-radius: 3px;
+
+    .tab_panel {
+        margin-top: 3px;
+        background: @lightBg;
+        border-left: 1px solid @darkBg;
+        border-right: 1px solid @darkBg;
+        height: 32px;
+        line-height: 32px;
+
+        a {
+            padding-left: 24px;
+            padding-right: 24px;
+            border-left: 1px solid @darkBg;
+            border-right: 1px solid @darkBg;
+
+            &.lfloat {
+                margin-left: -1px;
+                background-color: @darkBg;
+                color: white;
+                font-weight: bold;
+            }
+
+            &.rfloat {
+                margin-right: -1px;
+                background-color: white;
+                color: @text;
+            }
+        }
+    }
+
+    .top_spliter {
+        height: 48px;
+    }
+
+
+    .login_panel {
+        div {
+            margin-top: 10px;
+        }
+
+        label {
+            display: inline-block;
+            text-align: right;
+            width: 50px;
+            height: 32px;
+            line-height: 32px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-left: 64px;
+            color: @lightBg;
+            font-weight: bold;
+    }
+
+        #username, #password {
+            font-size: 16px;
+            width: 160px;
+            height: 32px;
+            line-height: 32px;
+    }
+
+        #loginButton {
+            position: absolute;
+            width: 100%;
+            height: 48px;
+            bottom: 0;
+            border-top: 0;
+            border-bottom: 0;
+            border-left: 1px solid @darkBg;
+            border-right: 1px solid @darkBg;
+            background-color: @lightBg;
+            margin: 1px 0;
+            color: @text;
+            font-weight: bold;
+    }
+
+        #loginButton:hover {
+            background: white;
+        }
+    }
 }

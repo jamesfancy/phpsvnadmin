@@ -2,12 +2,14 @@ $(function() {
     app.$();
     app.assignNames();
 
-    app.$.username.enterAsTab(app.$.password);
-    app.$.password.enter(function() {
+    app.$.username.placeholder("Username").enterAsTab(app.$.password);
+    app.$.password.placeholder("Password").enter(function() {
         app.$.loginButton.click();
     });
+    
+    app.$.hSignInButton.hide();
 
-    app.$.loginButton.on("click", function() {
+    app.$.loginButton.button().on("click", function() {
         var me = $(this);
         me.disable();
 

@@ -1,29 +1,36 @@
-<!DOCTYPE html>
+<?php
+require_once 'inc/common.inc.php';
+$self = currentUser();
+?><!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>登录</title>
-        <link type="text/css" rel="stylesheet/less" href="style/def.less" />
-        <script type="text/javascript" src="js/less-1.3.3.min.js"></script>
+        <?php include 'inc/inhead.inc.php' ?>
     </head>
     <body>
-        <div>
-            <label>用户名</label>
-            <input type="text" id="username" />
-        </div>
-        <div>
-            <label>密码</label>
-            <input type="password" id="password" />
-        </div>
-        <div>
-            <input type="button" id="loginButton" value="登录" />
-        </div>
-        <div>
-            <a href="reg.php">注册</a>
-            <a href="forgot.php">忘记密码</a>
+        <?php pageHeader(false); ?>
+        <div class="index_main_panel" id="mainPanel">
+            <div class="tab_panel">
+                <a class="button rfloat" href="javascript:void(0)">忘记密码</a>
+                <a class="button rfloat" href="javascript:void(0)">注册</a>
+                <a class="button lfloat" href="javascript:void(0)">登录</a>
+            </div>
+            <div class="login_panel" id="loginPanel">
+                <div class="top_spliter"></div>
+                <div>
+                    <label>用户名</label>
+                    <input type="text" id="username" />
+                </div>
+                <div>
+                    <label>密码</label>
+                    <input type="password" id="password" />
+                </div>
+                <div>
+                    <input type="button" id="loginButton" value="登录" />
+                </div>
+            </div>
         </div>
     </body>
-    <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/app/index.js"></script>
+    <?php include 'inc/endbody.inc.php' ?>
 </html>

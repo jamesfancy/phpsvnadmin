@@ -21,6 +21,13 @@
     });
 
     $.fn.extend({
+        placeholder: function(text) {
+            if (typeof text === "undefined") {
+                return this.attr("placeholder") || "";
+            } else {
+                return this.attr("placeholder", text || "");
+            }
+        },
         enterAsTab: function(selector) {
             var target = selector;
             if (typeof target === "string") {
@@ -33,7 +40,7 @@
                 return;
             }
 
-            this.on("keypress.app", function(event) {
+            return this.on("keypress.app", function(event) {
                 if (event.altKey || event.ctrlKey || event.shiftKey) {
                     return;
                 }
@@ -51,7 +58,7 @@
                 return;
             }
 
-            this.on("keypress.app", function(event) {
+            return this.on("keypress.app", function(event) {
                 if (event.altKey || event.ctrlKey || event.shiftKey) {
                     return;
                 }
@@ -62,10 +69,10 @@
             });
         },
         enable: function() {
-            this.attr("disabled", false);
+            return this.attr("disabled", false);
         },
         disable: function() {
-            this.attr("disabled", true);
+            return this.attr("disabled", true);
         },
         serializeObject: function() {
             "use strict";
@@ -228,6 +235,11 @@ jQuery(function() {
                     ? "J.Fan SvnAdmin"
                     : title + " - J.Fan SvnAdmin");
         }
+    })(jQuery);
+    
+    // 初始化Header
+    (function($) {
+        var pageHeader = $("#pageHeader");
     })(jQuery);
 
     // 注销按钮
