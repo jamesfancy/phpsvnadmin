@@ -8,7 +8,7 @@ if (!isset($keyName)) {
 }
 
 function noMethod($method) {
-    throw new BadMethodCallException("not defined $method", -1);
+    throw new BadMethodCallException("not defined $method", -256);
 }
 
 function handle() {
@@ -30,14 +30,10 @@ function handle() {
         case 'create':
             return onCreate();
         case 'update':
-            if ($key == null) {
-                return null;    // TODO 应该抛出异常
-            }
+            expectKey();
             return onUpdate($key);
         case 'delete':
-            if ($key == null) {
-                return null;    // TODO 应该抛出异常
-            }
+            expectKey();
             return onDelete($key);
         default:
             if (function_exists('onMethod')) {
@@ -45,6 +41,26 @@ function handle() {
             } else {
                 noMethod($method);
             }
+    }
+}
+
+function expectKey() {
+    global $key;
+    global $keyName;
+    if ($key == null) {
+        throw new Exception("expect parameter '$keyName'", -10);
+    }
+}
+
+function onMethodMap($method, $map, $noMethod = null) {
+    if (isset($map[$method])) {
+        return $map[$method]();
+    } else {
+        if (isset($noMethod)) {
+            $noMethod($method);
+        } else {
+            noMethod($method);
+        }
     }
 }
 

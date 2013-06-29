@@ -62,17 +62,20 @@ EOT;
                 ])->rowCount();
     }
 
-    public function createUser($username, $salt, $password) {
+    public function createUser($user) {
         $sql = <<<EOT
 insert into user
-       (username, password, salt)
-values (:user, :pass, :salt)
+       (username, password, salt, realname, type, email)
+values (:user, :pass, :salt, :realname, :type, :email)
 EOT;
 
         return $this->execute($sql, [
-                    ':user' => $username,
-                    ':pass' => $password,
-                    ':salt' => $salt
+                    ':user' => $user->username,
+                    ':pass' => $user->password,
+                    ':salt' => $user->salt,
+                    ':realname' => isset($user->realname) ? $user->realname : '',
+                    ':type' => isset($user->type) ? $user->type : 0,
+                    ':email' => isset($user->email) ? $user->email : ''
                 ])->rowCount();
     }
 

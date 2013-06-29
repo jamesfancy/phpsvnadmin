@@ -1,25 +1,22 @@
 <?php
 
 define('DEFAULT_PASS_LEN', 10);
+define('SALT_LEN', 16);
 
 $keyName = 'username';
 require_once 'action.inc.php';
 
 function onMethod($method) {
-    switch ($method) {
-        case 'signin':
-            return onSignIn();
-        case 'signout':
-            return onSignOut();
-        case 'resetpass':
-            return onResetPassword();
-        case 'updatepass':
-            return onUpdatePassword();
-        case 'findpass':
-            return onFindPassword();
-        default:
-            noMethod($method);
-    }
+    $map = [
+        'signin' => 'onSignIn',
+        'signout' => 'onSignOut',
+        'signup' => 'onCreate',
+        'resetpass' => 'onResetPassword',
+        'updatepass' => 'onUpdatePassword',
+        'findpass' => 'onFindPassword'
+    ];
+
+    return onMethodMap($method, $map);
 }
 
 function onSignIn() {
@@ -31,6 +28,7 @@ function onSignIn() {
 
     $signObject = (object) [
                 'username' => $key,
+                'realname' => $user['realname'],
                 'type' => $user['type'],
                 'signToken' => md5(rand()),
                 'signTime' => time()
@@ -56,37 +54,43 @@ function onQueryList($page) {
 }
 
 function onCreate() {
-    $username = strtolower(trim(getParam('username', '')));
-    if (empty($username)) {
+    $user = getParamObject([
+        'username', 'password', 'realname',
+        'email', 'type'
+    ]);
+
+    // validate username
+    if ($user->username != null) {
+        $user->username = strtolower(trim($user->username));
+    }
+
+    if (empty($user->username)) {
         throw new Exception('expect username', 1);
     }
 
-    $password = getParam('password', null);
-    if (empty($password)) {
-        $password = genPassword(0);
-        $isRandomPassword = true;
-    } else {
-        $isRandomPassword = false;
+    if (empty($user->password)) {
+        $user->password = genPassword();
+        $user->literalPassword = $user->password;
     }
 
-    $salt = md5(rand());
-    $hash = md5($username . $password . $salt);
+    $user->salt = genSalt();
+    $user->password = hashPassword($user->username, $user->password, $user->salt);
 
     global $dao;
-    $dao->createUser($username, $salt, $hash);
+    $dao->createUser($user);
 
+    // create json result model
     $result = new stdClass();
-    $result->username = $username;
-    if ($isRandomPassword) {
-        $result->password = $password;
+    $result->username = $user->username;
+    if (isset($user->literalPassword)) {
+        $result->password = $user->literalPassword;
     }
-
     return $result;
 }
 
 function onUpdate($username) {
     $user = new stdClass();
-    
+
     $user->username = $username;
     $user->realname = getParam('realname', null);
     $user->type = intval(getParam('type', 0));
@@ -101,31 +105,33 @@ function onDelete($username) {
     return $dao->deleteUser($username);
 }
 
-function onFindPassword($username) {
+function onFindPassword() {
+    global $key;
+    $username = $key;
     $email = trim(getParam('email', null));
     if (empty($email)) {
         throw new Exception('expect email', 1);
     }
-    
+
     global $dao;
     $user = $dao->getUser($username);
     if (!isset($user)) {
         throw new Exception('user not exists', 2);
     }
-    
+
     if (!isset($user['email'])) {
         throw new Exception('not register email address', 3);
     }
-    
+
     if (!$user['verified']) {
         throw new Exception('not verified the email address', 4);
     }
-    
+
     if (strcasecmp($email, $user['email']) != 0) {
         throw new Exception('email address is incorrect', 5);
     }
-    
-    // TODO 发送重设邮件，并登记重设密码的临时token，要设置过期时间
+
+// TODO 发送重设邮件，并登记重设密码的临时token，要设置过期时间
     return true;
 }
 
@@ -147,14 +153,14 @@ function onUpdatePassword() {
 function updatePassword($username, $password) {
     global $dao;
     if (empty($password)) {
-        $password = genPassword(0);
+        $password = genPassword();
         $isRandomPassword = true;
     } else {
         $isRandomPassword = false;
     }
 
-    $salt = md5(rand());
-    $hash = hashPassword($username, $salt, $password);
+    $salt = genSalt();
+    $hash = hashPassword($username, $password, $salt);
 
     $result = new stdClass();
     $result->daoResult = $dao->changePassword($username, $salt, $hash);
@@ -176,7 +182,7 @@ function verifyPassword($username, $password) {
         return false;
     }
 
-    $hash = hashPassword($user['username'], $user['salt'], $password);
+    $hash = hashPassword($user['username'], $password, $user['salt']);
     if ($hash == $user['password']) {
         return $user;
     } else {
@@ -184,11 +190,20 @@ function verifyPassword($username, $password) {
     }
 }
 
-function hashPassword($username, $salt, $password) {
-    return md5($username . $password . $salt);
+function hashPassword($username, $password, $salt) {
+    return md5(md5($username) . md5($password) . $salt);
 }
 
-function genPassword($length) {
+function genSalt() {
+    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $salt = '';
+    for ($i = 0; $i < SALT_LEN; $i++) {
+        $salt .= $chars[rand(0, 52)];
+    }
+    return md5($salt);
+}
+
+function genPassword($length = 0) {
     if ($length < 6) {
         $length = DEFAULT_PASS_LEN;
     }

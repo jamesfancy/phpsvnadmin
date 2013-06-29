@@ -7,9 +7,9 @@ $(function() {
         app.$.loginButton.click();
     });
 
-    app.$.regUser.placeholder("username").enterAsTab(app.$.regEmail);
-    app.$.regEmail.placeholder("email").enterAsTab(app.$.regPass);
-    app.$.regPass.placeholder("password").enter(function() {
+    app.$.regUser.placeholder("username").enterAsTab(app.$.regPass);
+    app.$.regEmail.placeholder("password").enterAsTab(app.$.regEmail);
+    app.$.regPass.placeholder("email").enter(function() {
         app.$.registerButton.click();
     });
 
@@ -32,11 +32,11 @@ $(function() {
         app.$.loginTab.data("panel", app.$.loginPanel).on("tab", function() {
             app.$.loginUser.focus();
         });
-        
+
         app.$.registerTab.data("panel", app.$.registerPanel).on("tab", function() {
             app.$.regUser.focus();
         });
-        
+
         app.$.forgotTab.data("panel", app.$.forgotPanel).on("tab", function() {
             app.$.forgotUser.focus();
         });
@@ -44,7 +44,7 @@ $(function() {
         app.$.tabPanel.on("click", "a", function() {
             $(this).tab();
         });
-        
+
         // active a tab
         var url = window.location.href;
         var m = url.match(/\?(.*)/);
@@ -59,16 +59,10 @@ $(function() {
         var me = $(this);
         me.disable();
 
-        var data = $.extend({
-            method: "signin"
-        }, $(":input").serializeObject());
-
-        app.json("actions/user.php", data).done(function(data) {
-            console.log(data);
+        app.$.loginForm.json().done(function(data) {
             if (data.code === 0) {
                 $.redirect("user.php");
             } else {
-                // TODO 这里有登录失败的相关提示
                 alert("登录失败：" + data.message);
             }
         }).fail(function() {
@@ -77,12 +71,38 @@ $(function() {
             me.enable();
         });
     });
-    
+
     app.$.registerButton.on("click", function() {
-        console.log("register");
+        var me = $(this);
+        me.disable();
+
+        app.$.registerForm.json().done(function(data) {
+            if (data.code === 0) {
+                console.log("register successful");
+            } else {
+                alert("注册用户失败：" + data.message);
+            }
+        }).fail(function() {
+            alert("注册用户失败");
+        }).complete(function() {
+            me.enable();
+        });
     });
-    
+
     app.$.getPasswordButton.on("click", function() {
-        console.log("getPassword");
+        var me = $(this);
+        me.disable();
+
+        app.$.forgotForm.json().done(function(data) {
+            if (data.code === 0) {
+                console.log("find password success");
+            } else {
+                alert("找回密码失败：" + data.message);
+            }
+        }).fail(function() {
+            alert("找回密码失败");
+        }).complete(function() {
+            me.enable();
+        });
     });
 });

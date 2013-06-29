@@ -95,6 +95,27 @@
             $.each(this.serializeArray(), extend);
             return result;
         },
+        json: function(options) {
+            if (this.is("form")) {
+                return app.formjson(this, options);
+            }
+
+            // if has action attribute, submit to the action
+            var action = this.attr("action");
+            if (!!action) {
+                return app.json(action,
+                        this.find(":input").serializeObject(),
+                        options);
+            }
+
+            // find a inner form to submit
+            var form = this.find("form");
+            if (form.length > 1) {
+                return app.formjson(form, options);
+            }
+            
+            return;
+        },
         applyData: function(data, converter) {
             if (!data) {
                 return;
@@ -124,7 +145,7 @@
                         }
                     }
                 })();
-                
+
                 if (d === false) {
                     continue;
                 }
@@ -199,6 +220,19 @@
                 }
             });
         },
+        formjson: function(selector, options) {
+            if (typeof selector === "string") {
+                selector = $(selector);
+            }
+
+            if (!selector instanceof jQuery || !selector.is("form")) {
+                throw new Error("selector should be a form");
+            }
+
+            return this.json(selector.attr("action"),
+                    selector.serializeObject(),
+                    options);
+        },
         assignNames: function() {
             $(":input:not([name])").filter("[id]").each(function() {
                 var me = $(this);
@@ -236,9 +270,9 @@ jQuery(function() {
                     : title + " - J.Fan SvnAdmin");
         }
     })(jQuery);
-    
+
     // 注销按钮
-    $("#signOutButton").on("click", function() {
+    $("#hSignOutButton").on("click", function() {
         if (!confirm("是否真要注销")) {
             return;
         }

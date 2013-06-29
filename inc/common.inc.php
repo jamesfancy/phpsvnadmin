@@ -14,6 +14,19 @@ function getParam($name, $default) {
     }
 }
 
+function getParamObject() {
+    $names = func_get_args();
+    if (is_array($names[0])) {
+        $names = $names[0];
+    }
+    
+    $obj = new stdClass();
+    foreach ($names as $n) {
+        $obj->$n = getParam($n, null);
+    }
+    return $obj;
+}
+
 function redirect($url) {
     header('Location:' . $url);
     exit();

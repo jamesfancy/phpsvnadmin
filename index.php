@@ -17,43 +17,52 @@ $self = currentUser();
                 <a id="registerTab" class="button rfloat" href="javascript:void(0)">注册</a>
             </div>
             <div class="index_panel" id="loginPanel">
-                <div>
-                    <label>用户名</label>
-                    <input type="text" id="loginUser" />
-                </div>
-                <div>
-                    <label>密码</label>
-                    <input type="password" id="loginPass" />
-                </div>
-                <div>
-                    <input type="button" id="loginButton" value="登录" />
-                </div>
+                <form id="loginForm" action="actions/user.php">
+                    <input type="hidden" name="method" value="signin" />
+                    <div>
+                        <label>用户名</label>
+                        <input type="text" id="loginUser" name="username" />
+                    </div>
+                    <div>
+                        <label>密码</label>
+                        <input type="password" id="loginPass" name="password" />
+                    </div>
+                    <div>
+                        <input type="button" id="loginButton" value="登录" />
+                    </div>
+                </form>
             </div>
             <div class="index_panel" id="registerPanel">
-                <div>
-                    <label>用户名</label>
-                    <input type="text" id="regUser" />
-                </div>
-                <div>
-                    <label>注册邮箱</label>
-                    <input type="text" id="regEmail" />
-                </div>
-                <div>
-                    <label>设置密码</label>
-                    <input type="password" id="regPass" />
-                </div>
-                <div>
-                    <input type="button" id="registerButton" value="注册" />
-                </div>
+                <form id="registerForm" action="actions/user.php">
+                    <input type="hidden" name="method" value="singup" />
+                    <div>
+                        <label>用户名</label>
+                        <input type="text" id="regUser" name="username" />
+                    </div>
+                    <div>
+                        <label>设置密码</label>
+                        <input type="password" id="regPass" name="password" />
+                    </div>
+                    <div>
+                        <label>注册邮箱</label>
+                        <input type="text" id="regEmail" name="email" />
+                    </div>
+                    <div>
+                        <input type="button" id="registerButton" value="注册" />
+                    </div>
+                </form>
             </div>
             <div class="index_panel" id="forgotPanel">
-                <div>
-                    <label>用户名或邮箱</label>
-                    <input type="text" id="forgotUser" />
-                </div>
-                <div>
-                    <input type="button" id="getPasswordButton" value="找回密码" />
-                </div>
+                <form id="forgotForm" action="actions/user.php">
+                    <input type="hidden" name="method" value="findpass" />
+                    <div>
+                        <label>用户名或邮箱</label>
+                        <input type="text" id="forgotUser" name="username" />
+                    </div>
+                    <div>
+                        <input type="button" id="getPasswordButton" value="找回密码" />
+                    </div>
+                </form>
             </div>
         </div>
         <?php include 'inc/footer.inc.php' ?>
