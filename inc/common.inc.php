@@ -49,10 +49,10 @@ function putJson($varName, $obj) {
         $varName = 'var '. $varName;
     }
 
-    $json = json_encode($obj);
+    $json = json_encode(json_encode($obj));
     echo <<<JS
         $varName = (function() {
-            var t = '$json';
+            var t = $json;
             return $.parseJSON(t);
         })(jQuery);
 

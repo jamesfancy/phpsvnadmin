@@ -5,7 +5,10 @@ $config->options = [
     'appRoot' => "/",
     
     'database' => 'sqlite',
-    'passFile' => '',
+    
+    'htpasswd' => 'htpasswd',
+    'authUserFile' => '',
+    'authAccessFile' => '',
     
     'isAllowRegister' => true,
     
